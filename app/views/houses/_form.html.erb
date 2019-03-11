@@ -1,0 +1,165 @@
+<style>
+
+.searchResults{
+	float:right;
+}
+
+body > div > div > div > div:nth-child(1){
+	background: #f4f6f9;
+	padding: 30px;
+}
+
+.list-group-item{
+	background: #f4f6f9;
+	margin: 0px 20px;
+}
+
+.list-group-item:hover{
+	background: #E87D2D;
+	cursor: pointer;
+	color: #f7e7d9;
+}
+
+h6 {
+	font-size: 15px;
+	margin: 8px 0px 10px 0px;
+}
+
+</style>
+
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<%= form_with(model: house, local: true, class: "foo") do |form|%>
+	  		<% if house.errors.any? %>
+		    	<div id="error_explanation">
+		      	<h2><%= pluralize(house.errors.count, "error") %> prohibited this house from being saved:</h2>
+
+		      <ul>
+		      	<% house.errors.full_messages.each do |message| %>
+		        <li><%= message %></li>
+		      <% end %>
+		      </ul>
+		    </div>
+			  <% end %>
+
+				<div class="text-center">
+			  	<h3>Post a New House</h3>
+				</div>
+				<div style="font-size: 80%">
+					<div class="form-group">
+						<h6>Upload Images:</h6>
+						<%= form.file_field :images, multiple: true, direct_upload: true %>
+					</div>
+
+					<div class="form-group">
+						<h6>Name:</h6>
+						<%= form.text_field :name, :class => "col-12" %>
+					</div>
+
+					<h6>Search for location:</h6>
+					<div class = "searchBox form-group">
+						<input type="text" placeholder="Search Here! Press space to trigger search!" class="search col-12" onkeypress= "search(this)"/>
+					</div>
+
+					<div class="field">
+						<h6>Location:</h6>
+						<%= form.text_area :location ,:class =>"col-12",:readonly => true%>
+					</div>
+
+					<div class="field" style="display:none">
+						<%= form.label :lat %>
+						<%= form.number_field :lat, step: :any %>
+					</div>
+
+					<div class="field" style="display:none">
+						<%= form.label :long %>
+						<%= form.number_field :long, step: :any %>
+					</div>
+
+					<div class="form-group">
+						<h6>Price:</h6>
+						<%= form.number_field :price, :class => "col-12" %>
+					</div>
+
+					<div class="field" >
+						<h6>No. of Bedrooms:</h6>
+						<%= form.number_field :bedrooms, :class => "col-12" %>
+					</div>
+
+					<div class="field">
+						<h6>No. of Bathrooms:</h6>
+						<%= form.number_field :bathrooms, :class => "col-12" %>
+					</div>
+
+					<div class="field">
+						<h6>Floor Area(Square Meters):</h6>
+						<%= form.number_field :floor_area, :class => "col-12" %>
+					</div>
+
+					<div class="field">
+						<h6>Furnishings:</h6>
+						<%= form.check_box :furnishing, :class => "col-12" %>
+					</div>
+
+					<div class="field">
+						<h6>Floor Levels:</h6>
+						<%= form.number_field :floor_levels, :class => "col-12" %>
+					</div>
+
+					<div class="field">
+						<h6>Lease Left(years):</h6>
+						<%= form.number_field :lease_left, :class => "col-12" %>
+					</div>
+
+					<div class="actions text-center mt-3">
+						<%= form.submit%>
+					</div>
+				</div>
+		<% end %>
+	</div>
+		<div class="col">
+  		<div class = "searchResults">
+  			<ul class = "resultslist list-group">
+  			</ul>
+  		</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+	document.querySelector("body > div > div:nth-child(4) > div > div:nth-child(1) > form > div:nth-child(4) > div.actions.text-center.mt-3 > input[type='submit']").className = "btn btn-this-primary";
+
+	function search(ele){
+		if(event.keyCode ==  32){
+			console.log("space pressed")
+		var input = ele.value;
+		var user_input = input.toString().split(" ").join('%20');
+
+	 var settings = {
+   "async": true,
+   "crossDomain": true,
+   "url": "https://us1.locationiq.com/v1/search.php?key=<%= ENV['locationiq_api'] %>" + "&q=" + user_input + "&format=json",
+   "method": "GET"
+ 	}
+ 	// Create Search Results and click event to the search results to update form
+ 	$.ajax(settings).done(function (response) {
+ 		document.querySelector(".resultslist").innerHTML = " ";
+ 		for(let i = 0 ; i < response.length ; i++){
+			var node = document.createElement("Li");
+			node.className = 'list-group-item';
+			var textnode = document.createTextNode(response[i].display_name);
+			node.addEventListener('click', function() {
+				document.querySelector("#house_location").innerHTML = response[i].display_name;
+				document.querySelector("#house_lat").value = parseFloat(response[i].lat);
+				document.querySelector("#house_long").value = parseFloat(response[i].lon);
+			});
+
+			node.appendChild(textnode);
+			document.querySelector(".resultslist").appendChild(node);
+			 	}
+ 			});
+ 		}
+	}
+</script>

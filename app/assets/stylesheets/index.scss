@@ -1,0 +1,191 @@
+html, body {
+  font-family: 'Hind', sans-serif;
+  height: 100%;
+}
+
+.nav-item {
+  padding-left: 10px;
+}
+
+.page-footer {
+  position: absolute;
+  bottom: 0;
+}
+
+a {
+  color: #E87D2D;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #FFA673;
+}
+
+.heading {
+  font-size: 95%;
+  font-style: italic;
+  color: #E87D2D;
+}
+
+
+//Donation 'button'
+#donation {
+  color: #E87D2D;
+}
+
+#donation:hover {
+  text-decoration: none;
+  color: #FFA673;
+}
+
+/* Set the size of the div element that contains the map */
+#map {
+ height: 500px;  /* The height is 400 pixels */
+ width: 100%;  /* The width is the width of the web page */
+}
+
+.nav-item {
+  display: inline;
+}
+
+.page-footer {
+  position: relative;
+  bottom: 0;
+}
+
+#filterButton {
+  text-decoration: none;
+  border-radius: 0;
+  color: #E87D2D;
+  transition-duration: 0.4s;
+}
+
+#filterButton:hover {
+  color: white;
+  background-color: #E87D2D;
+}
+
+.btn-this-primary {
+  background-color: #E89F45;
+  color: white;
+}
+
+.btn-this-primary:hover {
+  background-color: #f7e7d9;
+  color: #FFAA5A;
+}
+
+.btn-this-second {
+  background-color:#FFB84D;
+  color: white;
+}
+
+.btn-this-second:hover {
+  background-color: #f7e7d9;
+  color: #FFAA5A;
+}
+//Slider
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 3px;   
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%; 
+  background: #FFB84D;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #FFB84D;
+  cursor: pointer;
+}
+
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 17px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.sliderToggle {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.sliderToggle:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .sliderToggle {
+  background-color: #2196F3;
+}
+
+input:focus + .sliderToggle {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .sliderToggle:before {
+  -webkit-transform: translateX(13px);
+  -ms-transform: translateX(13px);
+  transform: translateX(13px);
+}
+
+/* Rounded sliders */
+.sliderToggle.round {
+  border-radius: 34px;
+}
+
+.sliderToggle.round:before {
+  border-radius: 50%;
+}
+
+
+
+/*
+Color Theme:
+#FFA673
+#E87D2D
+#FFAA5A
+#E89F45
+#FFB84D
+*/

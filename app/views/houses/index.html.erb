@@ -1,0 +1,112 @@
+
+
+<!-- Filter Bar -->
+  <div class="accordion" id="accordionExample">
+    <div class="card">
+      <button id="filterButton" class="btn btn-link p-1 m-0" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Filters
+      </button>
+      <div id="collapseOne" class="collapse show text-center" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body small">
+          <div class="row">
+            <div class="col">
+              Price: <span><input type="text" size="5" <% if !@houses.all.empty? %> value="<%= @houses.order(price: :asc).first.price %>" <% end %> placeholder="Min"/></span> - <span><input type="text" size="5" <% if !@houses.all.empty? %> value="<%= @houses.order(price: :asc).last.price %>" <% end %> placeholder="Max"/></span>
+            </div>
+
+            <div class="col">
+              Floor Area: <span><input type="text" size="5" <% if !@houses.all.empty? %> value="<%= @houses.order(floor_area: :asc).first.floor_area %>" <% end %> placeholder="Min"/></span> - <span><input type="text" size="5" <% if !@houses.all.empty? %> value="<%= @houses.order(floor_area: :asc).last.floor_area %>" <% end %> placeholder="Max"/></span>
+            </div>
+ 
+            <div class="col">
+              Floor Levels: <span><input type="text" size="5" <% if !@houses.all.empty? %> value="<%= @houses.order(floor_levels: :asc).first.floor_levels %>" <% end %> placeholder="Min"/></span> - <span><input type="text" size="5" <% if !@houses.all.empty? %> value="<%= @houses.order(floor_levels: :asc).last.floor_levels %>" <% end %> placeholder="Max"/></span>
+            </div>
+          </div>
+          <div class="row pt-4">
+            <div class="col slidecontainer">
+              <p class="m-0">Bedrooms (At Least): <span id="bedrooms"></span></p>
+              <input type="range" <% if !@houses.all.empty? %> min="<%= @houses.order(bedrooms: :asc).first.bedrooms %>" max="<%= @houses.order(bedrooms: :asc).last.bedrooms %>" value="<%= @houses.order(bedrooms: :asc).last.bedrooms/2 %>" <% else %> min="0" max="10" value="5" <% end %> class="slider" id="bedroom_range">
+            </div>
+ 
+            <div class="col slidecontainer">
+              <p class="m-0">Bathrooms (At Least): <span id="bathrooms"></span></p>
+              <input type="range" <% if !@houses.all.empty? %> min="<%= @houses.order(bathrooms: :asc).first.bathrooms %>" max="<%= @houses.order(bathrooms: :asc).last.bathrooms %>" value="<%= @houses.order(bathrooms: :asc).last.bathrooms/2 %>" <% else %> min="0" max="10" value="5" <% end %> class="slider" id="bathroom_range">
+            </div>
+
+
+            <div class="col slidecontainer">
+              <p class="m-0">Lease Left (At Least): <span id="leases"></span> years</p>
+              <input type="range" <% if !@houses.all.empty? %> min="<%= @houses.order(lease_left: :asc).first.lease_left %>" max="<%= @houses.order(lease_left: :asc).last.lease_left %>" value="<%= @houses.order(lease_left: :asc).last.lease_left/2 %>" <% else %> min="0" max="99" value="45" <% end %> class="slider" id="lease_range">
+            </div>  
+
+            <div class="col">
+              <div class="row">
+                <div class="col">
+                  Furnished
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label class="switch">
+                    <input type="checkbox">
+                    <span class="sliderToggle round"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <button class="btn btn-warning small mt-3 col mr-5" style="font-size: 15px" onclick="nearme()" id="filter">Houses Near Me</button>
+
+            <button class="btn btn-primary small mt-3 col ml-5" style="font-size: 15px" onclick="filter()" id="filter">Apply Filter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--The div element for the map -->
+  <div id="map"></div>
+
+<!--Load the API from the specified URL
+* The async attribute allows the browser to render the page while the API loads
+* The key parameter will contain your own API key (which is not needed for this tutorial)
+* The callback parameter executes the initMap() function
+-->
+
+<script>
+  //bedroom slider
+  var bedroomSlider = document.getElementById("bedroom_range");
+  var bedrooms = document.getElementById("bedrooms");
+  bedrooms.innerHTML = bedroomSlider.value;
+
+  bedroomSlider.oninput = function() {
+    bedrooms.innerHTML = this.value;
+  }
+
+  //bathroom slider
+  var bathroomsSlider = document.getElementById("bathroom_range");
+  var bathrooms = document.getElementById("bathrooms");
+  bathrooms.innerHTML = bathroomsSlider.value;
+
+  bathroomsSlider.oninput = function() {
+    bathrooms.innerHTML = this.value;
+  }
+
+  //lease slider
+  var leasesSlider = document.getElementById("lease_range");
+  var leases = document.getElementById("leases");
+  leases.innerHTML = leasesSlider.value;
+
+  leasesSlider.oninput = function() {
+    leases.innerHTML = this.value;
+  }
+
+  $('.collapse').collapse()
+
+</script>
+
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['google_api'] %>&callback=initMap">
+</script>
