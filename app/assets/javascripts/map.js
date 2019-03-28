@@ -23,7 +23,7 @@
     // Plot Markers
      //icon
     var icon = {
-      url: 'https://bravovillas.com/wp-content/uploads/2015/01/map-marker-red-fat.png',
+      url: 'http://maps.google.com/mapfiles/ms/icons/red.png',
       scaledSize: new google.maps.Size(30, 30)
     };
 
